@@ -3,7 +3,7 @@
 **Course:** Object Oriented Programming through Java (VCE-R25, B.Tech CSE)  
 **Institution:** Vardhaman College of Engineering, Hyderabad  
 **Department:** Computer Science & Engineering  
-**Interactive Visual Architecture Guide:** 🌐 [Open `project-explained.html`](project-explained.html)
+**Interactive Visual Architecture Guide:** 🌐 [Open `project-explained.html`](project-explained.html) &bull; 📰 [Read Engineering Blog (`cpl-blog.html`)](cpl-blog.html)
 
 ---
 

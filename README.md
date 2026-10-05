@@ -66,3 +66,4 @@ java -jar target/CampusPremierLeague.jar
 - 📐 [Architectural Design Blueprint (DESIGN.md)](./Course_End_Project_Java_Campus_Premier_League/DESIGN.md)
 - 📝 [Academic Report Notes & Viva Guide (REPORT_NOTES.md)](./Course_End_Project_Java_Campus_Premier_League/REPORT_NOTES.md)
 - 🌐 [Interactive HTML Architecture Explainer (project-explained.html)](./Course_End_Project_Java_Campus_Premier_League/project-explained.html)
+- 📰 [Engineering Story & Project Explainer Blog (cpl-blog.html)](./Course_End_Project_Java_Campus_Premier_League/cpl-blog.html)
