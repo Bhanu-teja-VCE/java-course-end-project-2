@@ -1,69 +1,133 @@
-# Campus Premier League (CPL): T20 Cricket Match Simulator & Live Player Auction Engine
+# 🏏 Campus Premier League (CPL) — T20 Cricket Simulator & Auction Engine
 
 **Course:** Object Oriented Programming through Java (VCE-R25, B.Tech CSE)  
-**Institution:** Vardhaman College of Engineering, Hyderabad (Batch No. 6)  
-
-| Roll Number | Student Name |
-| :--- | :--- |
-| **25881A05V7** | Madhavarapu Saritha |
-| **25881A05X9** | Chepyala Vishal |
-| **25881A05X0** | Gundu Srijay Krishna |
-
+**Institution:** Vardhaman College of Engineering, Hyderabad  
+**Department:** Computer Science & Engineering  
 **Interactive Visual Architecture Guide:** 🌐 [Open `project-explained.html`](project-explained.html)
 
 ---
 
-## 📌 1. Problem Statement & Motivation
+## 📖 1. What is Campus Premier League (CPL)?
 
-Cricket is the most popular sport on Indian campuses, but organizing tournaments involves complex logistical hurdles: conducting a fair live player auction within budget and squad limits, managing round-robin schedules, simulating realistic matches ball-by-ball, tracking individual player statistics, and computing Net Run Rates (NRR) mathematically.
+**Campus Premier League (CPL)** is a comprehensive Java desktop simulation suite that replicates the entire ecosystem of an IPL-style campus cricket tournament:
+1. **Live Multi-threaded Player Auction:** An autonomous auctioneer thread drives lots with live timer countdowns ("Going once... Going twice... Sold!"), while 4 competing AI franchise bots bid dynamically based on budget constraints, role deficits, and player ratings. Human users can also place live manual bids.
+2. **Stochastic Ball-by-Ball Match Engine:** Simulates realistic T20 deliveries governed by batter vs. bowler duel mechanics, pitch dynamics (Green Seaming, Batter-Friendly Flat track, Turning Dust Bowl, Balanced), over phase urgency (Powerplay, Middle, Death), and required run-rate pressure.
+3. **Interactive 2D Graphics Canvases:** Custom AWT `Graphics2D` components painting 360-degree radial Wagon Wheels (shot trajectories by angle and distance) and dynamic comparative Run-Rate Worm graphs.
+4. **Tournament League & Net Run Rate Engine:** Complete round-robin schedule (56 fixtures), official ICC/IPL Net Run Rate (NRR) mathematical calculation, sorted standings, Orange Cap (top batter) and Purple Cap (top bowler) awards, and top-4 playoff brackets.
+5. **Dual-Persistence Architecture:** Runs seamlessly in **both online and offline modes**. When connected to MySQL 8.0, it executes stored procedures (`CallableStatement`), ACID transactions, and batch inserts. If MySQL is offline, it automatically falls back to an in-memory repository with Java Object Serialization (`.cpl` snapshots).
 
-**Campus Premier League (CPL)** is a full-featured Java desktop application that models an entire T20 franchise cricket ecosystem:
-1. **Live Multi-threaded Player Auction:** An autonomous auctioneer thread drives lots with timed countdowns ("going once, going twice, sold!"), while competing AI bots evaluate players using distinct strategies (Aggressive, Budget-Minded, Needs-Based, Wildcard). Human users can place live bids for their franchise.
-2. **Realistic Ball-by-Ball Match Simulation Engine:** Models batter rating vs. bowler rating, over phases (Powerplay, Middle, Death), pitch conditions (Batter Friendly, Green Seaming, Dust Bowl, Balanced), and required run rates. Generates granular text commentary and 2D Wagon Wheel and Run-Rate worm graphics.
-3. **League Tournament Management:** 56 round-robin matches run in parallel threads, points table ranked by points and Net Run Rate (computed via MySQL stored procedures), Orange and Purple Cap leaderboards, and a top-4 playoff system (Qualifier 1, Eliminator, Qualifier 2, Grand Final).
-4. **Relational Database & Offline Resilience:** Backed by MySQL 8.0 with ACID transactions and stored procedures, but includes a 100% resilient in-memory offline engine so it runs seamlessly even if MySQL is offline.
+---
+
+## 🚀 2. Step-by-Step Guide: How to Open & Run the Simulator
+
+### ⚡ Method 1: Instant Launch (Windows Double-Click — Recommended)
+1. Navigate to the project directory:
+   `C:\Users\bhanu\Desktop\java cep\shreyan\Course_End_Project_Java_Campus_Premier_League`
+2. **Double-click `run_cpl.bat`**.
+3. The simulator window opens immediately at 1280x820 resolution in dark stadium mode!
+
+---
+
+### 💻 Method 2: Launch via PowerShell or Command Prompt
+Open PowerShell or CMD and run:
+```bat
+cd "C:\Users\bhanu\Desktop\java cep\shreyan\Course_End_Project_Java_Campus_Premier_League"
+.\run_cpl.bat
+```
+Or directly run the compiled shaded JAR:
+```bat
+cd "C:\Users\bhanu\Desktop\java cep\shreyan\Course_End_Project_Java_Campus_Premier_League\app"
+java -jar target/CampusPremierLeague.jar
+```
+
+---
+
+### 🗄️ Method 3: Running with MySQL (Optional for Full Database Features)
+The project runs 100% offline out-of-the-box. To enable MySQL persistence:
+1. Start MySQL 8.0 on your machine (default port 3306).
+2. Create or verify `db.properties` inside `app/` (or use the built-in GUI settings):
+   ```properties
+   db.url=jdbc:mysql://localhost:3306/cpl_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+   db.user=root
+   db.password=root123
+   ```
+3. Inside the app, open **Database > Test Connection** to verify connectivity and automatically install the database schema and stored procedures.
+
+---
+
+## 🎮 3. Walkthrough: Using the Simulator Screens
+
+Once the application is running, you can explore its 6 core functional tabs:
+
+### 1️⃣ Tab 1: Live Mega Auction Hall (Alt + A)
+- **Start Auction:** Click `Start Auction` to launch the background `Auctioneer` coordinator thread and 4 autonomous `BiddingBot` threads.
+- **Watch the Bidding War:** Observe bots competing for 120 college cricket athletes in real-time with visual countdown timers.
+- **Place Human Bids:** Select your favorite franchise, click `Bid +₹50,000` or `Bid +₹1,00,000` before the countdown hits 0!
+- **Fast Forward:** Click `Fast-Forward Auction` to instantly resolve remaining auction lots in background worker threads.
+
+### 2️⃣ Tab 2: Franchise Squads & Purses (Alt + S)
+- Select any of the 8 campus franchises from the dropdown (e.g. *Charminar Champions*, *Golconda Gladiators*, *Cyberabad Cobras*).
+- Inspect the full roster, remaining purse balance, role distribution (Batters, Bowlers, All-rounders, Wicket-Keepers), and overseas player limits.
+
+### 3️⃣ Tab 3: Fixtures & Schedule (Alt + F)
+- View the complete 56-match round-robin tournament schedule.
+- Filter matches by team or status (`Upcoming`, `In Progress`, `Completed`).
+- Click `Simulate Next Match` or `Simulate All Season Matches` to run full tournaments in seconds.
+
+### 4️⃣ Tab 4: Ball-by-Ball Match Simulator & 2D Graphics (Alt + M)
+- **Live Match Controls:** Click `Start Match`, `Bowl Next Ball`, or `Fast-Forward Over`.
+- **Radial Wagon Wheel (AWT 2D):** Visualizes actual shot vectors (angles $\theta$ and distances $r$) on a cricket ground oval canvas.
+- **Run-Rate Worm Canvas:** Plots 1st innings vs 2nd innings score trajectories over 20 overs.
+- **Dynamic Commentary:** Live play-by-play commentary synthesized in real time using mutable string buffers.
+
+### 5️⃣ Tab 5: Points Table & Caps (Alt + T)
+- **Standings:** Shows Matches Played, Won, Lost, Tied, Points, and dynamically computed **Net Run Rate (NRR)**.
+- **Cap Winners:** Live display of the **Orange Cap** (Highest run-scorer) and **Purple Cap** (Highest wicket-taker).
+
+### 6️⃣ Tab 6: Concurrency & Thread Monitor (Alt + R)
+- Live real-time inspection table displaying every active Java thread (`Auctioneer`, `BiddingBot-1..4`, `SafetyChecker-Daemon`, `EDT`).
+- Shows thread priority, current state (`RUNNABLE`, `TIMED_WAITING`, `WAITING`), and execution thread group.
 
 ---
 
 ## 🖼️ Application Screenshots
 
-| Live Mega Auction Hall | Franchise Squads & Purses |
+| 1. Live Mega Auction Hall | 2. Franchise Squads & Purses |
 | :---: | :---: |
 | ![Auction Hall](screenshots/01-auction-hall.png) | ![Squads](screenshots/02-squads.png) |
 | *Real-time player bidding with timer countdown* | *Squad rosters, role counts, and purse tracking* |
 
-| Fixtures Schedule | Ball-by-Ball Match Simulator |
+| 3. Fixtures Schedule | 4. Ball-by-Ball Match Simulator |
 | :---: | :---: |
 | ![Fixtures](screenshots/03-fixtures.png) | ![Live Match](screenshots/04-live-match.png) |
 | *56 round-robin fixtures and playoffs* | *Live scoreboard, wagon wheel & run-rate worm* |
 
-| Official Points Table & Caps | Concurrency & Thread Monitor |
+| 5. Official Points Table & Caps | 6. Concurrency & Thread Monitor |
 | :---: | :---: |
 | ![Standings](screenshots/05-standings.png) | ![Thread Monitor](screenshots/06-thread-monitor.png) |
 | *Net Run Rate rankings, Orange & Purple caps* | *Live thread lifecycle and priority tracking* |
 
 ---
 
-## 📈 2. Real Headless Benchmark Results (200 Simulated Matches)
+## 🔬 4. Headless Experiment Results (200 Simulated Matches)
 
-These figures come directly from the headless benchmarking tool ([`Experiment.java`](app/src/test/java/com/cpl/tools/Experiment.java)) executed over 200 consecutive T20 fixtures:
+Verified using the headless benchmarking suite ([`Experiment.java`](app/src/test/java/com/cpl/tools/Experiment.java)) across 200 matches (400 innings, 45,600+ simulated deliveries):
 
-| Metric | Measured Real Value | University Plausibility Criteria | Verification Status |
+| Metric | Measured Real Value | Syllabus Plausibility Criteria | Verification Status |
 | :--- | :---: | :---: | :---: |
-| **1st Innings Average Score** | **152.5 runs** | 140.0 – 180.0 runs | **PASSED (100% Plausible)** |
+| **1st Innings Average Score** | **152.50 runs** | 140.0 – 180.0 runs | **PASSED (100% Plausible)** |
 | **Score Standard Deviation** | **28.5 runs** | Typical T20 spread (18 – 30 runs) | **PASSED** |
 | **Median 1st Innings Score** | **154.0 runs** | Centered bell curve | **PASSED** |
 | **Score Minimum / Maximum** | **70 / 261 runs** | Realistic match extremes | **PASSED** |
 | **1st Innings Average Wickets** | **6.61 wickets** | 5.0 – 8.0 wickets | **PASSED (100% Plausible)** |
-| **2nd Innings Average Score** | **144.5 runs** | Chasing target distribution | **PASSED** |
+| **2nd Innings Average Score** | **144.50 runs** | Chasing target distribution | **PASSED** |
 | **Tied Matches Rate** | **0.0% (Resolved via Super Over)** | < 2.0% | **PASSED** |
-| **Defending vs Chasing Wins** | **40.5% / 59.5%** | Balanced T20 distribution | **PASSED** |
-| **Simulation Throughput** | **970.8 matches / second** | Sub-3 minute full season | **PASSED (< 1 second)** |
-| **Safety Invariant Check** | **100% of 200 matches** | Zero math/score flaws | **PASSED (0 violations)** |
+| **Simulation Throughput** | **970.87 matches / second** | Sub-3 minute full season | **PASSED (< 1 second)** |
+| **Safety Invariant Violations** | **0 across all 200 matches** | Zero math/score flaws | **PASSED (0 violations)** |
 
 ---
 
-## 📚 3. Complete Java Syllabus Coverage (Units I – V)
+## 📚 5. Complete Java Syllabus Coverage (Units I – V)
 
 | Unit | Syllabus Topic | Specific Implementation in CPL Code |
 | :---: | :--- | :--- |
@@ -71,7 +135,7 @@ These figures come directly from the headless benchmarking tool ([`Experiment.ja
 | | **Constructors & Overloading** | Overloaded constructors in `Player()`, `Batter()`, `Team()`, `Database.getConnection()`. |
 | | **`this`, `static`, Arrays** | Static sequence `Player.idSequence`, static constants in `CplConfig`. Arrays: `int[] overRuns` and `int[] overWickets` in `Innings.java`. |
 | | **Inheritance & `super`** | `Player` &rarr; `Batter`, `Bowler`, `AllRounder`, `WicketKeeper`. Explicit calls to `super(...)`. |
-| | **Overriding & Dynamic Method Dispatch** | Overridden `calculateImpactScore()` and `getSpecialtyDescription()` across player subclasses; `evaluateBid()` across `BiddingStrategy` subclasses. |
+| | **Overriding & Dynamic Method Dispatch** | Overridden `calculateImpactScore()` across player subclasses; `evaluateBid()` across `BiddingStrategy` subclasses. |
 | | **Abstract Classes & `final`** | `abstract class Player`, `final class CplConfig`, `final class Theme`. |
 | | **Interfaces** | `Rateable`, `BiddingStrategy`, `TournamentRepository`, `Auctioneer.AuctionListener`, `MatchEngine.MatchListener`. |
 | | **Packages & Access Control** | Structured packages: `model`, `auction`, `match`, `tournament`, `db`, `io`, `exception`, `engine`, `ui`. Protected methods and package-private members. |
@@ -95,47 +159,15 @@ These figures come directly from the headless benchmarking tool ([`Experiment.ja
 
 ---
 
-## 🧵 4. Concurrency Architecture & Thread Hierarchy
-
-```
- Swing Event Dispatch Thread (EDT) ──── Renders Canvas, Updates Tables, Handles Buttons
- │
- ├─ Auctioneer-Thread (extends Thread, Prio 10) ── Drives lots, countdown timer (wait/notifyAll)
- ├─ Bot-CCK, Bot-ATA... (implements Runnable, Prio 5) ── 8 Concurrent AI Bidding Bots
- ├─ MatchSimulator-Thread (implements Runnable, Prio 5) ── Ball-by-ball match physics engine
- └─ SeasonBatch-Thread (extends Thread, Prio 5) ── Simulates 56 round-robin matches in parallel
-```
-
----
-
-## 🚀 5. How to Run the Project
-
-### Method 1: Instant Launch (Windows)
-Double-click [`run_cpl.bat`](run_cpl.bat) in the project directory.
-
-### Method 2: Command Line (JAR)
-```bash
-cd app
-java -jar target/CampusPremierLeague.jar
-```
-
-### Method 3: Run JUnit Tests (25+ Tests)
-```bash
-cd app
-java -cp "target/test-classes;target/classes;lib/mysql-connector-j.jar;lib/junit-platform-console-standalone.jar" org.junit.platform.console.ConsoleLauncher --scan-classpath
-```
-
----
-
-## 🎯 6. Viva Voce Preparation Guide for Faculty (Mam)
+## 🎯 6. Viva Voce Preparation Guide for Faculty Evaluation
 
 1. **Why is the Auctioneer thread given `MAX_PRIORITY` (10)?**  
-   *Answer:* The auctioneer is the timing master. If lower-priority bots starve the auctioneer of CPU cycles, timer countdowns would jitter or miss deadlines. `MAX_PRIORITY` guarantees crisp countdown intervals.
+   *Answer:* The auctioneer thread manages the countdown clock. If bot threads run at the same priority, thread contention could delay the clock tick, causing countdown stuttering. Giving the auctioneer `MAX_PRIORITY` guarantees timely countdown intervals and fair arbitration.
 2. **How does the auction timer reset when a bid arrives?**  
-   *Answer:* The auctioneer calls `lot.wait(timeout)`. When any bot calls `lot.submitBid()`, it updates `countdownSeconds = 3` and invokes `notifyAll()`. This immediately wakes up the waiting auctioneer to register the new bid.
+   *Answer:* The auctioneer calls `lot.wait(timeout)`. When any bot or user calls `lot.submitBid()`, it updates `countdownSeconds = 3` and calls `notifyAll()`. This immediately wakes up the waiting auctioneer to register the new bid and restart the 3-second countdown.
 3. **How is Net Run Rate calculated mathematically?**  
-   *Answer:* \( \text{NRR} = \left(\frac{\text{Total Runs Scored}}{\text{Total Overs Faced}}\right) - \left(\frac{\text{Total Runs Conceded}}{\text{Total Overs Bowled}}\right) \). Overs with balls (e.g. 19.3) are converted to exact decimal fractions (\(19 + \frac{3}{6} = 19.5\)).
+   *Answer:* \( \text{NRR} = \left(\frac{\text{Total Runs Scored}}{\text{Total Overs Faced}}\right) - \left(\frac{\text{Total Runs Conceded}}{\text{Total Overs Bowled}}\right) \). Overs with balls (e.g. 19.3) are converted to exact decimal fractions (\(19 + \frac{3}{6} = 19.5\)). If a team is bowled out before 20 overs, they are penalized as having faced the full 20.0 overs.
 4. **How do you guarantee that a player is never sold twice?**  
-   *Answer:* `AuctionLot` is a synchronized monitor. Once a lot completes, its state becomes `SOLD`, and the player is removed from the auction queue and added to the winning team's roster. `SafetyChecker.verifyAuctionInvariants()` verifies uniqueness across all squads with a `HashSet`.
+   *Answer:* `AuctionLot` is a synchronized monitor. Once a lot completes, its state transitions to `SOLD`, the player is removed from the auction queue and added to the winning team's roster. `SafetyChecker.verifyAuctionInvariants()` verifies uniqueness across all squads with a `HashSet`.
 5. **How does the system work without MySQL?**  
-   *Answer:* We implemented the Strategy and Repository Design Patterns. If `Database.testConnection()` fails, the application automatically uses `InMemoryTournamentRepository`, storing teams, rosters, and computing standings in-memory using `TreeMap` and `TreeSet`.
+   *Answer:* We implemented the Repository Pattern (`TournamentRepository`). On startup, `Database.isAvailable()` runs a test ping with a 2-second timeout. If MySQL is unreachable, the system automatically instantiates `InMemoryTournamentRepository`, storing teams, rosters, and computing standings in-memory using `TreeMap` and `TreeSet`, with zero crashes.

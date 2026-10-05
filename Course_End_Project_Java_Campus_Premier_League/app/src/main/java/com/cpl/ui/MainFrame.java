@@ -210,11 +210,8 @@ public class MainFrame extends JFrame {
         aboutItem.addActionListener(e -> JOptionPane.showMessageDialog(this,
                 "Campus Premier League (CPL)\n" +
                 "Course: Object Oriented Programming through Java (VCE-R25)\n" +
-                "Batch 6, Vardhaman College of Engineering\n" +
-                "Authors:\n" +
-                "- Madhavarapu Saritha (25881A05V7)\n" +
-                "- Chepyala Vishal (25881A05X9)\n" +
-                "- Gundu Srijay Krishna (25881A05X0)",
+                "Vardhaman College of Engineering\n" +
+                "Department of Computer Science & Engineering",
                 "About CPL", JOptionPane.INFORMATION_MESSAGE));
         helpMenu.add(aboutItem);
         mb.add(helpMenu);

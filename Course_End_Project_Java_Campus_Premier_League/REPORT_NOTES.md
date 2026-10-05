@@ -3,12 +3,6 @@
 **Institution:** Vardhaman College of Engineering (Autonomous), Hyderabad  
 **Department:** Computer Science and Engineering  
 **Academic Batch:** 2024–2028 | Batch 6  
-
-### Team Members
-1. **Madhavarapu Saritha** — `25881A05V7` (B.Tech CSE)
-2. **Chepyala Vishal** — `25881A05X9` (B.Tech CSE)
-3. **Gundu Srijay Krishna** — `25881A05X0` (B.Tech CSE)
-
 ---
 
 ## 1. Abstract & Executive Summary

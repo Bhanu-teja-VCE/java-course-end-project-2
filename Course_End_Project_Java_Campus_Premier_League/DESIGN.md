@@ -1,12 +1,7 @@
 # DESIGN.md: Campus Premier League (CPL) Simulator
 
 **Course:** Object Oriented Programming through Java (VCE-R25)  
-**Institution:** Vardhaman College of Engineering, CSE Dept, Batch 6  
-**Students:**  
-- Madhavarapu Saritha (25881A05V7)  
-- Chepyala Vishal (25881A05X9)  
-- Gundu Srijay Krishna (25881A05X0)  
-
+**Department:** Computer Science & Engineering  
 ---
 
 ## 1. System Architecture & Package Structure

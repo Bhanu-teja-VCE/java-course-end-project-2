@@ -50,9 +50,9 @@ id,name,role,base_price,is_overseas,batting_rating,bowling_rating,fielding_ratin
 49,Wanindu Hasaranga,ALL_ROUNDER,700000,true,72,87,85
 50,Matheesha Pathirana,BOWLER,600000,true,20,88,76
 51,Bhanu Teja,ALL_ROUNDER,500000,false,82,80,85
-52,Saritha Madhavarapu,BATTER,500000,false,84,50,88
-53,Vishal Chepyala,BOWLER,500000,false,30,86,82
-54,Srijay Krishna,WICKET_KEEPER,500000,false,85,30,89
+52,Siddharth Varma,BATTER,500000,false,84,50,88
+53,Vikram Rathore,BOWLER,500000,false,30,86,82
+54,Sanjay Kumar,WICKET_KEEPER,500000,false,85,30,89
 55,Karthik Aryan,BATTER,400000,false,78,40,78
 56,Pranav Sai,BOWLER,400000,false,25,82,75
 57,Rohan Varma,ALL_ROUNDER,400000,false,76,77,80
