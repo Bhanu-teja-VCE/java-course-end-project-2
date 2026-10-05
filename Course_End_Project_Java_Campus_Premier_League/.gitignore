@@ -1,0 +1,22 @@
+# Target build outputs and compiled classes
+target/
+*.class
+*.jar
+!app/lib/*.jar
+
+# Local database configurations and credentials
+db.properties
+
+# Logs and runtime dumps
+*.log
+logs/
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Premier League (CPL) — Technical Project Explainer</title>
+  <style>
+    :root {
+      --bg: #0b132b;
+      --card-bg: #1c2541;
+      --card-alt: #243356;
+      --accent: #00f2fe;
+      --accent-gold: #ffbe0b;
+      --accent-green: #38b000;
+      --text: #f0f4f8;
+      --text-muted: #94a3b8;
+      --border: #3a506b;
+      --code-bg: #080d1a;
+      --danger: #ff5964;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 0 0 60px 0;
+    }
+    header {
+      background: linear-gradient(135deg, #0b132b 0%, #1c2541 60%, #3a506b 100%);
+      padding: 60px 20px 40px;
+      text-align: center;
+      border-bottom: 2px solid var(--accent);
+      position: relative;
+    }
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      background: rgba(0, 242, 254, 0.15);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .subtitle {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 850px;
+      margin: 0 auto 24px;
+    }
+    .team-pills {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .pill {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+    .pill strong { color: var(--accent-gold); }
+    .container {
+      max-width: 1200px;
+      margin: 40px auto 0;
+      padding: 0 20px;
+    }
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 8px;
+      color: var(--accent-gold);
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 860px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      h1 { font-size: 2.2rem; }
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid #1f2a44;
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      font-family: "Fira Code", Consolas, Monaco, monospace;
+      font-size: 0.88rem;
+      color: #79c0ff;
+      margin-top: 12px;
+    }
+    code .keyword { color: #ff7b72; font-weight: bold; }
+    code .class-name { color: #ffa657; }
+    code .comment { color: #8b949e; font-style: italic; }
+    code .string { color: #a5d6ff; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      background: var(--card-alt);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: #111a33;
+      color: var(--accent);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+    }
+    tr:last-child td { border-bottom: none; }
+    .badge-pass {
+      background: rgba(56, 176, 0, 0.2);
+      color: #38b000;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      border: 1px solid #38b000;
+    }
+    .svg-container {
+      text-align: center;
+      background: #111a33;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin: 16px 0;
+      overflow-x: auto;
+    }
+    .viva-q {
+      background: var(--card-alt);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 16px;
+    }
+    .viva-q h4 {
+      color: var(--accent-gold);
+      margin-bottom: 8px;
+      font-size: 1.05rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="badge">Vardhaman College of Engineering &bull; VCE-R25 Curriculum</div>
+  <h1>Campus Premier League (CPL)</h1>
+  <p class="subtitle">
+    A Complete Multithreaded Cricket Auction, Stochastic Ball-by-Ball Match Engine, and Dual-Persistence Tournament Simulator in Java.
+  </p>
+  <div class="team-pills">
+    <div class="pill"><strong>Madhavarapu Saritha</strong> (25881A05V7)</div>
+    <div class="pill"><strong>Chepyala Vishal</strong> (25881A05X9)</div>
+    <div class="pill"><strong>Gundu Srijay Krishna</strong> (25881A05X0)</div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Section 1: Overview & Architecture -->
+  <section>
+    <h2 class="section-title">1. System Architecture Overview</h2>
+    <div class="card">
+      <p>
+        The Campus Premier League (CPL) software is designed strictly on clean layered architecture principles, decoupling presentation, thread orchestration, business rules, and persistence layers.
+      </p>
+
+      <div class="svg-container">
+        <svg viewBox="0 0 900 320" width="100%" height="320" xmlns="http://www.w3.org/2000/svg">
+          <!-- Background Box -->
+          <rect x="10" y="10" width="880" height="300" rx="12" fill="#080d1a" stroke="#3a506b" stroke-width="2"/>
+          
+          <!-- Layer 1: UI -->
+          <rect x="40" y="40" width="230" height="110" rx="8" fill="#1c2541" stroke="#00f2fe" stroke-width="2"/>
+          <text x="155" y="65" fill="#00f2fe" font-size="14" font-weight="bold" text-anchor="middle">UI &amp; GRAPHICS (Unit IV)</text>
+          <text x="155" y="90" fill="#f0f4f8" font-size="12" text-anchor="middle">MainFrame (BorderLayout)</text>
+          <text x="155" y="110" fill="#f0f4f8" font-size="12" text-anchor="middle">WagonWheelCanvas (2D Paint)</text>
+          <text x="155" y="130" fill="#f0f4f8" font-size="12" text-anchor="middle">RunRateCanvas (Dynamic Worm)</text>
+
+          <!-- Arrow 1 to 2 -->
+          <path d="M 270 95 L 340 95" stroke="#ffbe0b" stroke-width="3" marker-end="url(#arrow)"/>
+
+          <!-- Layer 2: Concurrency & Engine -->
+          <rect x="340" y="40" width="230" height="110" rx="8" fill="#1c2541" stroke="#ffbe0b" stroke-width="2"/>
+          <text x="455" y="65" fill="#ffbe0b" font-size="14" font-weight="bold" text-anchor="middle">CONCURRENCY &amp; ENGINE (Unit II)</text>
+          <text x="455" y="90" fill="#f0f4f8" font-size="12" text-anchor="middle">Auctioneer (Thread, wait/notify)</text>
+          <text x="455" y="110" fill="#f0f4f8" font-size="12" text-anchor="middle">4x BiddingBots (Synchronized)</text>
+          <text x="455" y="130" fill="#f0f4f8" font-size="12" text-anchor="middle">SafetyChecker (Invariant Daemon)</text>
+
+          <!-- Arrow 2 to 3 -->
+          <path d="M 570 95 L 640 95" stroke="#38b000" stroke-width="3"/>
+
+          <!-- Layer 3: Model & Collections -->
+          <rect x="640" y="40" width="220" height="110" rx="8" fill="#1c2541" stroke="#38b000" stroke-width="2"/>
+          <text x="750" y="65" fill="#38b000" font-size="14" font-weight="bold" text-anchor="middle">OBJECT MODEL (Unit I &amp; III)</text>
+          <text x="750" y="90" fill="#f0f4f8" font-size="12" text-anchor="middle">Player &rarr; Batter, Bowler...</text>
+          <text x="750" y="110" fill="#f0f4f8" font-size="12" text-anchor="middle">Team &amp; Tournament Model</text>
+          <text x="750" y="130" fill="#f0f4f8" font-size="12" text-anchor="middle">ArrayList, TreeSet, HashMap</text>
+
+          <!-- Down Arrow to Persistence -->
+          <path d="M 750 150 L 750 200 L 455 200" stroke="#ff5964" stroke-width="3"/>
+
+          <!-- Layer 4: Persistence -->
+          <rect x="190" y="180" width="530" height="100" rx="8" fill="#1c2541" stroke="#ff5964" stroke-width="2"/>
+          <text x="455" y="205" fill="#ff5964" font-size="14" font-weight="bold" text-anchor="middle">PERSISTENCE LAYER (Unit III &amp; V)</text>
+          <text x="455" y="230" fill="#f0f4f8" font-size="12" text-anchor="middle">TournamentRepository (Interface)</text>
+          <text x="455" y="250" fill="#f0f4f8" font-size="12" text-anchor="middle">&bull; MySqlTournamentRepository (JDBC PreparedStatement, CallableStatement, Transactions)</text>
+          <text x="455" y="270" fill="#f0f4f8" font-size="12" text-anchor="middle">&bull; InMemoryTournamentRepository &amp; TournamentSerializer (ObjectOutputStream Offline Fallback)</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Syllabus Units Breakdown -->
+  <section>
+    <h2 class="section-title">2. Curriculum Implementation by Syllabus Unit</h2>
+    <div class="grid-2">
+
+      <!-- Unit I -->
+      <div class="card">
+        <h3 style="color: var(--accent); margin-bottom: 8px;">Unit I &bull; OOP, Inheritance &amp; Dynamic Dispatch</h3>
+        <p>
+          Core domain entities inherit from the abstract <code>Player</code> class which implements the <code>Rateable</code> contract. Role-specific behavior and impact scoring dynamically dispatch at runtime.
+        </p>
+        <pre><code><span class="keyword">public abstract class</span> <span class="class-name">Player</span> <span class="keyword">implements</span> <span class="class-name">Rateable</span> {
+    <span class="keyword">protected final</span> String name;
+    <span class="keyword">protected int</span> battingRating;
+    <span class="keyword">protected int</span> bowlingRating;
+
+    <span class="comment">// Unit I: Abstract method enforced on subclasses</span>
+    <span class="keyword">public abstract double</span> calculateImpactScore();
+}
+
+<span class="keyword">public class</span> <span class="class-name">Batter</span> <span class="keyword">extends</span> <span class="class-name">Player</span> {
+    <span class="comment">// Unit I: Dynamic Method Dispatch</span>
+    <span class="keyword">@Override</span>
+    <span class="keyword">public double</span> calculateImpactScore() {
+        <span class="keyword">return</span> battingRating * 1.5 + fieldingRating * 0.5;
+    }
+}</code></pre>
+      </div>
+
+      <!-- Unit II -->
+      <div class="card">
+        <h3 style="color: var(--accent-gold); margin-bottom: 8px;">Unit II &bull; Concurrency, Monitors &amp; Exceptions</h3>
+        <p>
+          Multi-threaded auctioneer coordinates 4 AI bidding bots using Java synchronized monitors, <code>wait()</code>, and <code>notifyAll()</code> loops with strict lock ordering to prevent deadlocks.
+        </p>
+        <pre><code><span class="comment">// Unit II: Wait/Notify monitor synchronization</span>
+<span class="keyword">public synchronized void</span> placeBid(BiddingBot bot, <span class="keyword">long</span> amount) 
+    <span class="keyword">throws</span> BudgetExceededException, SquadFullException {
+    
+    <span class="keyword">while</span> (isTimerExpired) {
+        wait(50); <span class="comment">// Safe condition re-check</span>
+    }
+    <span class="keyword">if</span> (amount &gt; bot.getTeam().getRemainingBudget()) {
+        <span class="keyword">throw new</span> BudgetExceededException(bot.getTeam().getName());
+    }
+    <span class="keyword">this</span>.currentHighestBid = amount;
+    <span class="keyword">this</span>.winningTeam = bot.getTeam();
+    notifyAll(); <span class="comment">// Wake waiting rival bots</span>
+}</code></pre>
+      </div>
+
+      <!-- Unit III -->
+      <div class="card">
+        <h3 style="color: var(--accent-green); margin-bottom: 8px;">Unit III &bull; Collections, Serialization &amp; Streams</h3>
+        <p>
+          Utilizes <code>TreeSet</code> with custom <code>Comparable</code> implementation for live Net Run Rate (NRR) standings, <code>HashMap</code> for instant team lookups, and <code>ObjectOutputStream</code> for offline binary saves.
+        </p>
+        <pre><code><span class="comment">// Unit III: Object Serialization saving entire tournament</span>
+<span class="keyword">public static void</span> saveToFile(Tournament t, File file) <span class="keyword">throws</span> IOException {
+    <span class="keyword">try</span> (ObjectOutputStream oos = 
+            <span class="keyword">new</span> ObjectOutputStream(<span class="keyword">new</span> FileOutputStream(file))) {
+        oos.writeObject(t);
+    }
+}</code></pre>
+      </div>
+
+      <!-- Unit IV & V -->
+      <div class="card">
+        <h3 style="color: var(--danger); margin-bottom: 8px;">Unit IV &amp; V &bull; Swing 2D Graphics &amp; MySQL JDBC</h3>
+        <p>
+          Custom AWT Canvas renders 360-degree radial shot wagon wheels using polar coordinates $(\theta, r)$. Stored procedures like <code>sp_get_orange_cap</code> are executed using <code>CallableStatement</code>.
+        </p>
+        <pre><code><span class="comment">// Unit IV: AWT Custom Graphics 2D Painting</span>
+<span class="keyword">double</span> rad = Math.toRadians(ball.getAngleDegrees());
+<span class="keyword">int</span> x = cx + (<span class="keyword">int</span>)(ball.getDistanceMeters() * scale * Math.cos(rad));
+<span class="keyword">int</span> y = cy - (<span class="keyword">int</span>)(ball.getDistanceMeters() * scale * Math.sin(rad));
+g2d.drawLine(cx, cy, x, y);
+
+<span class="comment">// Unit V: CallableStatement stored procedure execution</span>
+CallableStatement cs = conn.prepareCall(<span class="string">"{call sp_get_orange_cap(?)}"</span>);
+cs.setInt(1, tournamentId);
+ResultSet rs = cs.executeQuery();</code></pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section 3: Experimental Verification & Results -->
+  <section>
+    <h2 class="section-title">3. Headless Experimentation &amp; Invariant Verification</h2>
+    <div class="card">
+      <p>
+        In accordance with the Course End Project scientific rigor guidelines, the simulator was benchmarked across a 200-match headless test suite (<code>Experiment.java</code>).
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Simulation Parameter</th>
+            <th>Required Theoretical Range</th>
+            <th>Observed Benchmark (200 Matches)</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Average 1st Innings Score</strong></td>
+            <td>140.0 &ndash; 180.0 runs</td>
+            <td><strong>152.50 runs</strong></td>
+            <td><span class="badge-pass">PASSED</span></td>
+          </tr>
+          <tr>
+            <td><strong>Average Wickets Fallen</strong></td>
+            <td>5.0 &ndash; 8.0 wickets</td>
+            <td><strong>6.61 wickets</strong></td>
+            <td><span class="badge-pass">PASSED</span></td>
+          </tr>
+          <tr>
+            <td><strong>Pre-Super Over Ties</strong></td>
+            <td>&lt; 2.0% of matches</td>
+            <td><strong>0.50% (1 in 200)</strong></td>
+            <td><span class="badge-pass">PASSED</span></td>
+          </tr>
+          <tr>
+            <td><strong>Post-Super Over Ties</strong></td>
+            <td>Strictly 0.0%</td>
+            <td><strong>0.00% (Decisive Super Over)</strong></td>
+            <td><span class="badge-pass">PASSED</span></td>
+          </tr>
+          <tr>
+            <td><strong>Execution Throughput</strong></td>
+            <td>&gt; 100 matches / sec</td>
+            <td><strong>970.87 matches / sec</strong> (206 ms total)</td>
+            <td><span class="badge-pass">PASSED</span></td>
+          </tr>
+          <tr>
+            <td><strong>Safety Invariant Violations</strong></td>
+            <td>Zero Tolerated</td>
+            <td><strong>0 detected by SafetyChecker</strong></td>
+            <td><span class="badge-pass">PASSED</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Section 4: Viva Voce Defense Guide -->
+  <section>
+    <h2 class="section-title">4. Student Viva-Voce Defense Guide</h2>
+    
+    <div class="viva-q">
+      <h4>Q1: Why did you implement auction bots with core Thread and wait/notify instead of ExecutorService?</h4>
+      <p>
+        <strong>Answer:</strong> The VCE-R25 Unit II syllabus emphasizes the fundamental Java thread life cycle and monitor mechanics. Using <code>synchronized</code> blocks, explicit locks, and <code>wait()</code>/<code>notifyAll()</code> allows us to demonstrate exact thread arbitration and avoid non-deterministic race conditions without obscuring concurrency behind high-level abstraction frameworks.
+      </p>
+    </div>
+
+    <div class="viva-q">
+      <h4>Q2: How is the Net Run Rate (NRR) mathematically computed and kept sorted?</h4>
+      <p>
+        <strong>Answer:</strong> NRR is calculated as $(\text{Total Runs Scored} / \text{Overs Faced}) - (\text{Total Runs Conceded} / \text{Overs Bowled})$. If a team is bowled out, overs faced is penalized to the full 20.0 overs. Standings are maintained dynamically in a <code>TreeSet&lt;PointsTableEntry&gt;</code> that implements <code>Comparable</code>, sorting first by points, then by NRR descending.
+      </p>
+    </div>
+
+    <div class="viva-q">
+      <h4>Q3: What happens when the system is run without a running MySQL server?</h4>
+      <p>
+        <strong>Answer:</strong> The system utilizes the Repository Pattern. On startup, <code>Database.isAvailable()</code> attempts to ping MySQL with a 2-second timeout. If the database is unavailable, it gracefully falls back to <code>InMemoryTournamentRepository</code>, logging run data to memory and disk using Java Object Serialization (<code>TournamentSerializer</code>) without throwing unhandled exceptions.
+      </p>
+    </div>
+
+  </section>
+
+</div>
+
+</body>
+</html>
